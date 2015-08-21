@@ -40,7 +40,12 @@ OnExit, Fix_Keys
 ProcessName := "ZuOnline.exe"
 hwnd := MemoryOpenFromName(ProcessName)
 
-Under_Mouse = 0x11CCA6F0
+Under_Mouse = 0x
+
+IfEqual,Under_Mouse,%Hex%, {
+MsgBox, 4112, Under Mouse Error, The Under_Mouse variable does not containe a String Value!`nZuOnline Bot wil now Exit!
+ExitApp
+}
 
 Gui, +AlwaysOnTop +Disabled -SysMenu +Owner
 Gui, Add, Text,,Iteam/NPC/Monster (For Debugg):
@@ -49,11 +54,12 @@ Gui, Add, Edit, ReadOnly w190 vUnder_Mouse_GUI ym,
 Gui, Add, Edit, ReadOnly w190, %Under_Mouse% 
 GuiControl,, Under_Mouse_GUI,Press X Key
 
-Gui, Show, NoActivate x0 y0, Auto Fight/Loot
+Gui, Show, NoActivate x0 y0, ZuOnline Auto Fight/Loot
 WinActivate, ahk_exe ZuOnline.exe
 WinWaitActive, ahk_exe ZuOnline.exe
 
 X::
+Random, delay,100,700
 SoundBeep
 GuiControl,, Under_Mouse_GUI,
 send, {Ctrl down}
@@ -61,11 +67,11 @@ Loop
 {
 Sleep,1004
 send,{Q Down} ;Auto target a Ape
-Sleep, 184
+Sleep, %delay%
 send,{Q Up}
-Sleep,752
+Sleep, %delay%
 send,{F Down} ;Sends the Puppet to kill it.
-Sleep,176
+Sleep, %delay%
 send,{F Up}
 
 GuiControl,, Under_Mouse_GUI, % A := MemoryReadPointer(hwnd, Under_Mouse, "Str", 16)
