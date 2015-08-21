@@ -9,6 +9,7 @@ Date: 21/08/2015
 Contact info:
 http://www.autohotkey.com/board/user/21149-snowflake/
 https://github.com/floowsnaake
+http://pastebin.com/u/Snow_Flake
 
 What does it do?
 ----------------------
@@ -25,8 +26,8 @@ This bot will ONL work if you are a Summoner class becuse it uses the (Ghostly P
 
 Hotkeys
 ----------
-X = Start the Bot-
-Escape/ESC = Exit the bot-
+X = Start the Bot.
+Escape/ESC = Exit the bot.
 
 */
 
@@ -42,13 +43,13 @@ hwnd := MemoryOpenFromName(ProcessName)
 
 Under_Mouse = 0x
 
-IfEqual,Under_Mouse,%Hex%, {
-MsgBox, 4112, Under Mouse Error, The Under_Mouse variable does not containe a String Value!`nZuOnline Bot wil now Exit!
+IfEqual,Under_Mouse,0x, {
+MsgBox, 4112, Under Mouse Error, The Under_Mouse variable does not containe a String Value! it must be likes this 0xE7389620`nZuOnline Auto Fight/Loot Bot wil now Exit!
 ExitApp
 }
 
 Gui, +AlwaysOnTop +Disabled -SysMenu +Owner
-Gui, Add, Text,,Iteam/NPC/Monster (For Debugg):
+Gui, Add, Text,,Item/NPC/Monster (For Debugg):
 Gui, Add, Text,,Pointer:
 Gui, Add, Edit, ReadOnly w190 vUnder_Mouse_GUI ym,
 Gui, Add, Edit, ReadOnly w190, %Under_Mouse% 
@@ -62,11 +63,11 @@ X::
 Random, delay,100,700
 SoundBeep
 GuiControl,, Under_Mouse_GUI,
-send, {Ctrl down}
-Loop
+send, {Ctrl down} ;Shows the items on the ground/on the map.
+Loop ;Loops it all
 {
 Sleep,1004
-send,{Q Down} ;Auto target a Ape
+send,{Q Down} ;Auto target a Enemy.
 Sleep, %delay%
 send,{Q Up}
 Sleep, %delay%
@@ -78,8 +79,8 @@ GuiControl,, Under_Mouse_GUI, % A := MemoryReadPointer(hwnd, Under_Mouse, "Str",
 QQ := MemoryReadPointer(hwnd, Under_Mouse, "Str", 16)
 
 CoordMode, Pixel, Screen
-PixelSearch, FoundX, FoundY, 239, 212, 1037, 810, 0x3240F3, 0, Fast RGB
-If ErrorLevel = 0 ; IF MAgic iteam color is found on the screen.
+PixelSearch, FoundX, FoundY, 239, 212, 1037, 810, 0x3240F3, 0, Fast RGB ; color is Blue
+If ErrorLevel = 0 ; IF Magic iteam color is found on the screen.
 {
 MouseMove, %FoundX%, %FoundY%
 IF (QQ = "Attacking Spar" or QQ = "Defensive Spar") ; IF mouse if under these iteams then pick it.
