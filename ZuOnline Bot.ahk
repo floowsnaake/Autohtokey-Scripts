@@ -96,7 +96,6 @@ IF (QQ = "Attacking Spar" or QQ = "Defensive Spar") ; IF mouse if under these it
 MouseMove, %FoundX%, %FoundY%	
 Sleep, 300
 Click ; clicks the item.
-MsgBox %QQ%
 Sleep, 3000
 }
 }
