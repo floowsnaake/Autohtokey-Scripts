@@ -3,7 +3,7 @@ Name: ZuOnline Bot
 Version = Pre-Alpha 0.1
 Made by: Flow_Snake & DrSinner
 Autohotkey version: v1.1.22.03
-tested on: Windows 7 64bit
+Tested on: Windows 7 64bit
 Date: 21/08/2015
 
 Contact info:
@@ -14,7 +14,7 @@ http://pastebin.com/u/Snow_Flake
 What does it do?
 ----------------------
 
-NOTE: YOU will need to change the (Under_Mouse =) adress with a one that works/its diffirent for you so miy adress WILL NOT work for you!
+NOTE: YOU will need to change the (Item_Under_Mouse =) adress with a one that works/its diffirent for you so miy adress WILL NOT work for you!
 
 Also make sure that you edit these 2 words/items inside of the " " 
 
@@ -41,19 +41,28 @@ OnExit, Fix_Keys
 ProcessName := "ZuOnline.exe"
 hwnd := MemoryOpenFromName(ProcessName)
 
-Under_Mouse = 0x
+Adress = 1FAA41C0 ; This is the Adress under the mouse to make the bot see the item thats under the mouse., Like this for example 1FAA41C0, note that you dont need to add the 0x part.
 
-IfEqual,Under_Mouse,0x, {
-MsgBox, 4112, Under Mouse Error, The Under_Mouse variable does not containe a String Value! it must be likes this 0xE7389620`nZuOnline Auto Fight/Loot Bot wil now Exit!
+Item_Under_Mouse = 0x%adress%
+Pixel_Item_Pick = 0x3240F3 ; Blue
+
+IfEqual,Item_Under_Mouse,0x, {
+MsgBox, 4112, Under Mouse Error, The Item_Under_Mouse variable does not containe a String Value! it must be likes this 0x1FAA41C0`nZuOnline Auto Fight/Loot Bot wil now Exit!
 ExitApp
 }
 
-Gui, +AlwaysOnTop +Disabled -SysMenu +Owner
+Gui, +AlwaysOnTop
+Gui, Add, Text,,Items To Pick:
+Gui, Add, Text,,Pixel Pick Color:
 Gui, Add, Text,,Item/NPC/Monster (For Debugg):
 Gui, Add, Text,,Pointer:
-Gui, Add, Edit, ReadOnly w190 vUnder_Mouse_GUI ym,
-Gui, Add, Edit, ReadOnly w190, %Under_Mouse% 
-GuiControl,, Under_Mouse_GUI,Press X Key
+Gui, Add, Edit, ReadOnly w190 ym, Attacking Spar & Defensive Spar
+Gui, Add, Progress, w20 h20 vCol, 100
+Gui, Add, Edit, ReadOnly x206 y32 w100 h20 , %Pixel_Item_Pick%
+Gui, Add, Edit, ReadOnly w190 vItem_Under_Mouse_GUI, 
+Gui, Add, Edit, ReadOnly w190, %Item_Under_Mouse% 
+
+GuiControl,, Item_Under_Mouse_GUI,Press X Key
 
 Gui, Show, NoActivate x0 y0, ZuOnline Auto Fight/Loot
 WinActivate, ahk_exe ZuOnline.exe
@@ -62,7 +71,7 @@ WinWaitActive, ahk_exe ZuOnline.exe
 X::
 Random, delay,100,700
 SoundBeep
-GuiControl,, Under_Mouse_GUI,
+GuiControl,, Item_Under_Mouse_GUI,
 send, {Ctrl down} ;Shows the items on the ground/on the map.
 Loop ;Loops it all
 {
@@ -75,18 +84,19 @@ send,{F Down} ;Sends the Puppet to kill it.
 Sleep, %delay%
 send,{F Up}
 
-GuiControl,, Under_Mouse_GUI, % A := MemoryReadPointer(hwnd, Under_Mouse, "Str", 16)
-QQ := MemoryReadPointer(hwnd, Under_Mouse, "Str", 16)
+GuiControl,, Item_Under_Mouse_GUI, % A := MemoryReadPointer(hwnd, Item_Under_Mouse, "Str", 16)
+QQ := MemoryReadPointer(hwnd, Item_Under_Mouse, "Str", 16)
 
 CoordMode, Pixel, Screen
-PixelSearch, FoundX, FoundY, 239, 212, 1037, 810, 0x3240F3, 0, Fast RGB ; color is Blue
-If ErrorLevel = 0 ; IF Magic iteam color is found on the screen.
+PixelSearch, FoundX, FoundY, 239, 212, 1037, 810, %Pixel_Item_Pic%, 0, Fast RGB ; color is Blue
+IF ErrorLevel = 0 ; IF Magic iteam color is found on the screen.
 {
-MouseMove, %FoundX%, %FoundY%
 IF (QQ = "Attacking Spar" or QQ = "Defensive Spar") ; IF mouse if under these iteams then pick it.
 {
+MouseMove, %FoundX%, %FoundY%	
 Sleep, 300
 Click ; clicks the item.
+MsgBox %QQ%
 Sleep, 3000
 }
 }
@@ -127,6 +137,7 @@ else
 }
 
 
+^Esc::
 Esc::
 ExitApp
 return
