@@ -5,30 +5,21 @@ Made by: Flow_Snake & DrSinner
 Autohotkey version: v1.1.22.03
 Tested on: Windows 7 64bit
 Date: 21/08/2015
-
 Contact info:
 http://www.autohotkey.com/board/user/21149-snowflake/
 https://github.com/floowsnaake
 http://pastebin.com/u/Snow_Flake
-
 What does it do?
 ----------------------
-
-NOTE: YOU will need to change the (Item_Under_Mouse =) adress with a one that works/its diffirent for you so miy adress WILL NOT work for you!
-
+NOTE: YOU will need to change the (Item_Under_Mouse =) address with a one that works/its different for you so my address WILL NOT work for you!
 Also make sure that you edit these 2 words/items inside of the " " 
-
 IF (QQ = "Attacking Spar" or QQ = "Defensive Spar")
-
 These are the items that the bot will pick up if it gets dropped.
-
-This bot will ONL work if you are a Summoner class becuse it uses the (Ghostly Puppet) to auto mark/select an Enemy and then switch the Puppet into Agressive mode/Auto attack mode, then when the Enemy is killed it will check for a specific item/loot that the Enemy droped and pick it up and continue to do that/loop it all again.
-
+This bot will ONLY work if you are a Summoner class because it uses the (Ghostly Puppet) to auto mark/select an Enemy and then switch the Puppet into Aggressive mode/Auto attack mode, then when the Enemy is killed it will check for a specific item/loot that the Enemy drooped and pick it up and continue to do that/loop it all again.
 Hotkeys
 ----------
 X = Start the Bot.
 Escape/ESC = Exit the bot.
-
 */
 
 IF NOT A_IsAdmin
@@ -41,20 +32,20 @@ OnExit, Fix_Keys
 ProcessName := "ZuOnline.exe"
 hwnd := MemoryOpenFromName(ProcessName)
 
-Adress = 1FAA41C0 ; This is the Adress under the mouse to make the bot see the item thats under the mouse., Like this for example 1FAA41C0, note that you dont need to add the 0x part.
+Adress = 1FAA41C0 ; This is the Address under the mouse to make the bot see the item thats under the mouse., Like this for example 1FAA41C0, note that you dont need to add the 0x part.
 
 Item_Under_Mouse = 0x%adress%
 Pixel_Item_Pick = 0x3240F3 ; Blue
 
 IfEqual,Item_Under_Mouse,0x, {
-MsgBox, 4112, Under Mouse Error, The Item_Under_Mouse variable does not containe a String Value! it must be likes this 0x1FAA41C0`nZuOnline Auto Fight/Loot Bot wil now Exit!
+MsgBox, 4112, Under Mouse Error, The Item_Under_Mouse variable does not contain a String Value! it must be likes this 0x1FAA41C0`nZuOnline Auto Fight/Loot Bot will now Exit!
 ExitApp
 }
 
 Gui, +AlwaysOnTop
 Gui, Add, Text,,Items To Pick:
 Gui, Add, Text,,Pixel Pick Color:
-Gui, Add, Text,,Item/NPC/Monster (For Debugg):
+Gui, Add, Text,,Item/NPC/Monster (For Debug):
 Gui, Add, Text,,Pointer:
 Gui, Add, Edit, ReadOnly w190 ym, Attacking Spar & Defensive Spar
 Gui, Add, Progress, w20 h20 vCol, 100
