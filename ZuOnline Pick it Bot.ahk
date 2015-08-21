@@ -1,5 +1,5 @@
 /*
-Name: ZuOnline Auto Fight/Loot
+Name: ZuOnline Bot
 Version = Pre-Alpha 0.1
 Made by: Flow_Snake & DrSinner
 Autohotkey version: v1.1.22.03
